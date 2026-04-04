@@ -1,3 +1,10 @@
+:root {
+  --iconic-black: rgb(0, 0, 0);
+  --radiant-white: rgb(255, 255, 255);
+  --passionate-red: rgb(255, 0, 59);
+  --eternal-gold: rgb(227, 166, 53);
+}
+
 /* —— basic reset —— */
 * {
   box-sizing: border-box;
