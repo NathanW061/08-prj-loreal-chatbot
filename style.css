@@ -30,6 +30,12 @@ body {
   margin-bottom: 10px;
 }
 
+.logo {
+  padding: 4px;
+  width: 50%;
+  height: auto;
+}
+
 /* chat window */
 .chatbox {
   margin: 40px 0;
