@@ -39,7 +39,7 @@ body {
 
 .logo {
   padding: 4px;
-  width: 50%;
+  width: 75%;
   height: auto;
 }
 
@@ -57,10 +57,125 @@ body {
   overflow-y: auto;
   background: #fafafa;
   white-space: pre-line;
+
+  display: flex;
+  flex-direction: column;
 }
 
 /* messages */
-.msg {
+.msg-entry {
+  height: fit-content;
+  margin: 8px 0px;
+  
+  .msg-author {
+    font-size: 0.8em;
+    color: gray;
+
+    animation-name: authorEnter;
+    animation-duration: 0.5s;
+  }
+
+  .msg-bubble {
+    
+    background-color: white;
+    border-radius: 5px;
+    padding: 4px 8px;
+    max-width: 75%;
+    width: fit-content;
+
+    font-size: 1.0em;
+
+    animation-timing-function: ease-out;
+    animation-duration: 0.25s;
+  }
+}
+
+.msg-entry.user {
+  text-align: right;
+  .msg-bubble {
+    transform-origin: top right;
+    margin-left: auto;
+    margin-right: 0;
+
+    color: var(--iconic-black);
+    animation-name: bubbleEnterRight;
+  }
+}
+
+.msg-entry.bot {
+  text-align: left;
+  .msg-bubble {
+    transform-origin: top left;
+    background-color: var(--passionate-red);
+    margin-left: 0;
+    margin-right: auto;
+
+    color: var(--radiant-white);
+    animation-name: bubbleEnterLeft;
+  }
+}
+
+.msg-entry.system {
+  text-align: left;
+  .msg-bubble {
+    transform-origin: top left;
+    background-color: var(--eternal-gold);
+    margin-left: 0;
+    margin-right: auto;
+
+    font-size: 1.0em;
+    color: var(--iconic-black);
+    animation-name: bubbleEnterLeft;
+  }
+
+  .msg-bubble.italic {
+    font-style: italic;
+  }
+}
+
+.msg-entry.hiding {
+  .msg-bubble {
+    animation-direction: reverse;
+    scale: 0%;
+  }
+  .msg-author {
+    animation-direction: reverse;
+    scale: 0%;
+  }
+}
+
+@keyframes bubbleEnterRight {
+  0% {
+    transform: translateX(20px);
+    scale: 0%;
+  }
+  100% {
+    transform: translateX(0px);
+    scale: 100%;
+  }
+}
+
+@keyframes bubbleEnterLeft {
+  0% {
+    transform: translateX(-20px);
+    scale: 0%;
+  }
+  100% {
+    transform: translateX(0px);
+    scale: 100%;
+  }
+}
+
+@keyframes authorEnter {
+  0% {
+    opacity: 0%;
+  }
+  100% {
+    opacity: 100%;
+  }
+}
+
+/*.msg {
   margin-bottom: 14px;
   line-height: 1.5;
 }
@@ -71,7 +186,7 @@ body {
 
 .msg.ai {
   color: #666666;
-}
+}*/
 
 /* input row */
 .chat-form {
@@ -94,7 +209,7 @@ body {
 
 .chat-form button {
   font-size: 18px;
-  background: #000;
+  background: var(--passionate-red);
   color: #fff;
   border: none;
   padding: 12px;
@@ -111,8 +226,13 @@ body {
   font-size: 24px;
 }
 
-.chat-form button:hover {
-  background: #666666;
+.chat-form button:disabled {
+  background-color: color-mix(in srgb, var(--passionate-red) 100%, black 40%);
+  cursor: not-allowed;
+}
+
+.chat-form button:hover:enabled {
+  background-color: color-mix(in srgb, var(--passionate-red) 100%, black 20%);
 }
 
 .chat-form button:focus {
@@ -153,4 +273,96 @@ body {
 
 .site-footer a:hover {
   color: #666666;
+}
+
+.mobile-hrz {
+  display: none;
+}
+
+@media (max-aspect-ratio: 3/4) and (max-width: 500px)
+{
+  body {
+    align-items: center;
+    height: 100vh;
+  }
+
+  .page-wrapper{
+    display: flex;
+    flex-direction: column;
+  }
+
+  main {
+    flex-grow: 1;
+  }
+
+  .site-header {
+    padding-top: 20px;
+  }
+
+  .chatbox {
+    height: auto;
+
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .chat-window {
+    height: 55vh;
+    flex-grow: 1;
+  }
+
+  .site-footer {
+    margin-top: 0px;
+    margin-bottom: 10px;
+  }
+
+  .chat-form input {
+    font-size: 16px;
+  }
+}
+
+@media (min-aspect-ratio: 4/3) and (max-height: 500px)
+{
+  body {
+    align-items: center;
+    height: 100vh;
+  }
+
+  .page-wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 92.5vw;
+  }
+
+  .site-header {
+    width: 30vw;
+    margin-right: 30px;
+    padding-top: 20px;
+  }
+
+  main {
+    flex-grow: 2;
+    width: auto;
+  }
+
+  .chatbox {
+    margin: 0;
+  }
+  
+  .chat-window {
+    height: 70vh;
+  }
+
+  .site-footer {
+    margin: 0px;
+    margin-bottom: 40px;
+  }
+  
+  .no-mobile-hrz {
+    display: none;
+  }
+
+  .mobile-hrz {
+    display: block;
+  }
 }
