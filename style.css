@@ -40,6 +40,7 @@ body {
 .logo {
   padding: 4px;
   width: 75%;
+  max-width: 300px;
   height: auto;
 }
 
