@@ -51,7 +51,7 @@ body {
 .chat-window {
   height: 360px;
   border: 1px solid #000;
-  padding: 20px;
+  padding: 10px 20px;
   font-size: 18px;
   line-height: 1.5;
   overflow-y: auto;
@@ -65,7 +65,7 @@ body {
 /* messages */
 .msg-entry {
   height: fit-content;
-  margin: 8px 0px;
+  margin-bottom: 8px;
   
   .msg-author {
     font-size: 0.8em;
@@ -76,7 +76,6 @@ body {
   }
 
   .msg-bubble {
-    
     background-color: white;
     border-radius: 5px;
     padding: 4px 8px;

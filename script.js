@@ -7,12 +7,12 @@ const userSubmit = document.getElementById("sendBtn");
 let messageHistory = [
   {
     role: 'system',
-    content: 'You are a chatbot that answers questions about, and gives advice/recommendations related to, L\'Oréal brand products. If the user asks a question that would be relevant to one or more L\'Oréal product(s) or the products L\'Oréal carries in general, such as beauty-related topics, go ahead and answer them. Otherwise, politely decline to answer the question and offer suggestions on topics you can respond to. Also, please do not use double asterisks in your response.'
+    content: 'You are a chatbot that answers questions about, and gives advice/recommendations related to, L\'Oréal brand products. If the user asks a question that would be relevant to one or more L\'Oréal product(s) or the products L\'Oréal carries in general, such as beauty-related topics, go ahead and answer them. Otherwise, politely decline to answer the question and offer suggestions on topics you can respond to.'
   }
 ];
 
 // Set initial message
-//chatWindow.textContent = "👋 Hello! How can I help you today?";
+appendMessage("👋 Hello! How can I help you today?", "bot");
 
 /* Handle form submit */
 chatForm.addEventListener("submit", async (e) => {
@@ -25,11 +25,11 @@ chatForm.addEventListener("submit", async (e) => {
   appendMessage(userInput.value, 'user');
   userInput.value = '';
   enableInput(false);
+  await delay(250);
 
   const sysWaitingMsg = appendSystemMessage('Thinking...', true);
   // When using Cloudflare, you'll need to POST a `messages` array in the body,
   // and handle the response using: data.choices[0].message.content
-  //chatWindow.textContent = "Waiting for a response...";
   let response = await fetch('https://loreal-chatbot-security.nathan-winkel.workers.dev/', {
     method: 'POST',
     headers: {
@@ -43,7 +43,6 @@ chatForm.addEventListener("submit", async (e) => {
   await removeSystemMessage(sysWaitingMsg);
   if(!response.ok)
   {
-    //chatWindow.textContent = "Oops! Something went wrong, please try again.";
     appendSystemMessage('Oops! Something went wrong, please try again.', false);
     enableInput(true);
     return;
@@ -51,10 +50,11 @@ chatForm.addEventListener("submit", async (e) => {
 
   // Show message
   const data = await response.json();
-  console.log(data);
 
-  //chatWindow.innerHTML = data.choices[0].message.content;
-  appendMessage(data.choices[0].message.content, 'bot');
+  let botMessage = data.choices[0].message.content;
+  botMessage = botMessage.replace('**', ''); // Remove attempts at bold Markdown formatting
+
+  appendMessage(botMessage, 'bot');
   enableInput(true);
 });
 
